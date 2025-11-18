@@ -40,7 +40,7 @@ export default function DailyTaskApp() {
     const savedStart = JSON.parse(localStorage.getItem("startDate")) || null;
     const savedDateLabel =
       JSON.parse(localStorage.getItem("dateLabelSetting")) || "short";
-    const savedDark = JSON.parse(localStorage.getItem("darkMode")) || false;
+    const savedDark = JSON.parse(localStorage.getItem("darkMode")) ?? true;
 
     const savedTasks = savedTasksRaw.map((t) => {
       if (
@@ -417,8 +417,12 @@ export default function DailyTaskApp() {
                                       <Card
                                         className={`cursor-pointer transition-all duration-300 ${
                                           task.completedDays.includes(day)
-                                            ? "bg-white border-l-4 border-green-500 text-gray-900 shadow-sm"
-                                            : "bg-white border border-gray-200 text-gray-900 hover:shadow"
+                                            ? (darkMode
+                                                ? "bg-gradient-to-r from-green-600 to-green-700 text-white border-l-4 border-green-500 shadow-sm"
+                                                : "bg-white border-l-4 border-green-500 text-gray-900 shadow-sm")
+                                            : (darkMode
+                                                ? "bg-gray-700 border border-gray-700 text-gray-100 hover:shadow"
+                                                : "bg-white border border-gray-200 text-gray-900 hover:shadow")
                                         }`}
                                         onClick={() => toggleTask(task.id)}
                                       >
@@ -437,9 +441,8 @@ export default function DailyTaskApp() {
                                                   "Daily Routine"}
                                               </span>
                                               {task.reminderTime && (
-                                                <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
-                                                  ⏰ {task.reminderTime} •{" "}
-                                                  {getDateForDay(day)}
+                                                <span className={`px-2 py-0.5 rounded-full ${darkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-100 text-gray-700'}`}>
+                                                  ⏰ {task.reminderTime} • {getDateForDay(day)}
                                                 </span>
                                               )}
                                             </div>
@@ -566,13 +569,13 @@ export default function DailyTaskApp() {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl"
+            className={`${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white'} rounded-2xl p-6 w-full max-w-md shadow-2xl`}
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
-            <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">
+            <h3 className={`text-xl font-bold mb-4 text-center ${darkMode ? 'text-gray-100' : 'text-gray-800'}`}>
               Add New Daily Task
             </h3>
             <form onSubmit={handleAddTask} className="space-y-4">
@@ -582,7 +585,7 @@ export default function DailyTaskApp() {
                   value={newTaskName}
                   onChange={(e) => setNewTaskName(e.target.value)}
                   placeholder="Enter task name (e.g., 'Exercise', 'Read 20 pages')..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-800 placeholder-gray-500"
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${darkMode ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400' : 'border-gray-300 text-gray-800 placeholder-gray-500'}`}
                   autoFocus
                 />
               </div>
@@ -592,7 +595,7 @@ export default function DailyTaskApp() {
                   <select
                     value={newTaskPriority}
                     onChange={(e) => setNewTaskPriority(e.target.value)}
-                    className="px-3 py-2 rounded-md border border-gray-300 text-gray-800"
+                    className={`px-3 py-2 rounded-md border ${darkMode ? 'border-gray-600 bg-gray-700 text-gray-100' : 'border-gray-300 text-gray-800'}`}
                   >
                     <option value="Most Important">Most Important</option>
                     <option value="Daily Routine">Daily Routine</option>
@@ -608,7 +611,7 @@ export default function DailyTaskApp() {
                     type="time"
                     value={newTaskReminder}
                     onChange={(e) => setNewTaskReminder(e.target.value)}
-                    className="px-3 py-2 rounded-md border border-gray-300 text-gray-800"
+                    className={`px-3 py-2 rounded-md border ${darkMode ? 'border-gray-600 bg-gray-700 text-gray-100' : 'border-gray-300 text-gray-800'}`}
                   />
                 </label>
               </div>
@@ -618,7 +621,7 @@ export default function DailyTaskApp() {
                   type="button"
                   onClick={cancelAddTask}
                   variant="outline"
-                  className="flex-1 py-3 text-gray-600 border-gray-300 hover:bg-gray-50"
+                  className={`flex-1 py-3 ${darkMode ? 'text-gray-200 border-gray-600 hover:bg-gray-700' : 'text-gray-600 border-gray-300 hover:bg-gray-50'}`}
                 >
                   Cancel
                 </Button>
