@@ -124,7 +124,11 @@ const Calendar = ({
             <span className="leading-none">{i}</span>
             {dateObj && (
               <span
-                className={`mt-0.5 text-[10px] ${dateLabelSetting === "always-mobile" ? "block" : "hidden md:block"} opacity-90 ${darkMode ? 'text-gray-200' : 'text-gray-600'}`}
+                className={`mt-0.5 text-[10px] ${
+                  dateLabelSetting === "always-mobile"
+                    ? "block"
+                    : "hidden md:block"
+                } opacity-90 ${darkMode ? "text-gray-200" : "text-gray-600"}`}
               >
                 {labelText}
               </span>
