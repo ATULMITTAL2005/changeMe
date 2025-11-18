@@ -1,5 +1,11 @@
-function ProgressOverview({ completedDays, currentDayProgress, currentDay }) {
-  const totalProgress = (completedDays / 100) * 100;
+function ProgressOverview({
+  completedDays,
+  currentDayProgress,
+  currentDay,
+  tasks = [],
+  totalDays = 100,
+}) {
+  const totalProgress = (completedDays / totalDays) * 100;
   const currentDayComplete =
     currentDayProgress.completed === currentDayProgress.total &&
     currentDayProgress.total > 0;
@@ -25,6 +31,46 @@ function ProgressOverview({ completedDays, currentDayProgress, currentDay }) {
         <p className="text-center text-2xl font-bold text-blue-600 mt-2">
           {totalProgress.toFixed(1)}%
         </p>
+      </div>
+
+      {/* Daily progress sparkline / bar chart */}
+      <div className="mt-6">
+        <h3 className="text-sm font-medium text-gray-700 mb-2">
+          Daily Progress
+        </h3>
+        <div className="w-full h-20 bg-gray-50 rounded-md p-2 overflow-x-auto">
+          {/** make the svg wider on large totalDays so bars are readable on mobile; container scrolls horizontally */}
+          <svg
+            width={Math.max(300, totalDays * 6)}
+            height={100}
+            viewBox={`0 0 ${totalDays} 100`}
+            preserveAspectRatio="none"
+          >
+            {Array.from({ length: totalDays }).map((_, i) => {
+              const day = i + 1;
+              const completedCount = tasks.filter((t) =>
+                t.completedDays.includes(day)
+              ).length;
+              const pct = tasks.length
+                ? Math.round((completedCount / tasks.length) * 100)
+                : 0;
+              const x = i + 0.2;
+              const barHeight = pct; // since viewBox height is 100
+              return (
+                <rect
+                  key={i}
+                  x={x}
+                  y={100 - barHeight}
+                  width={0.6}
+                  height={barHeight}
+                  fill={
+                    pct === 100 ? "#10b981" : pct > 0 ? "#60a5fa" : "#e5e7eb"
+                  }
+                />
+              );
+            })}
+          </svg>
+        </div>
       </div>
 
       {/* Current Day Status */}
