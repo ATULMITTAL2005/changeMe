@@ -172,19 +172,31 @@ export default function DailyTaskApp() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setActiveTab("tasks")}
-                  className={`px-3 py-1 rounded-md text-sm ${activeTab === "tasks" ? "bg-white text-black" : "bg-white/10 text-white"}`}
+                  className={`px-3 py-1 rounded-md text-sm ${
+                    activeTab === "tasks"
+                      ? "bg-white text-black"
+                      : "bg-white/10 text-white"
+                  }`}
                 >
                   Tasks
                 </button>
                 <button
                   onClick={() => setActiveTab("progress")}
-                  className={`px-3 py-1 rounded-md text-sm ${activeTab === "progress" ? "bg-white text-black" : "bg-white/10 text-white"}`}
+                  className={`px-3 py-1 rounded-md text-sm ${
+                    activeTab === "progress"
+                      ? "bg-white text-black"
+                      : "bg-white/10 text-white"
+                  }`}
                 >
                   Progress
                 </button>
                 <button
                   onClick={() => setActiveTab("calendar")}
-                  className={`px-3 py-1 rounded-md text-sm ${activeTab === "calendar" ? "bg-white text-black" : "bg-white/10 text-white"}`}
+                  className={`px-3 py-1 rounded-md text-sm ${
+                    activeTab === "calendar"
+                      ? "bg-white text-black"
+                      : "bg-white/10 text-white"
+                  }`}
                 >
                   Calendar
                 </button>
@@ -236,7 +248,9 @@ export default function DailyTaskApp() {
                       min={10}
                       max={365}
                       value={totalDays}
-                      onChange={(e) => setTotalDays(Number(e.target.value) || 100)}
+                      onChange={(e) =>
+                        setTotalDays(Number(e.target.value) || 100)
+                      }
                       className="w-16 px-2 py-1 rounded-md text-black"
                       title="Total days for the challenge"
                     />
@@ -266,7 +280,11 @@ export default function DailyTaskApp() {
                 transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
               >
                 <div className="bg-white/10 p-4 lg:p-6 rounded-2xl backdrop-blur-sm shadow-xl">
-                  <CircularProgress value={progress} size={120} strokeWidth={8} />
+                  <CircularProgress
+                    value={progress}
+                    size={120}
+                    strokeWidth={8}
+                  />
                   <motion.p
                     className="mt-3 lg:mt-4 text-center text-base lg:text-lg font-semibold text-white/90"
                     key={progress}
@@ -301,13 +319,22 @@ export default function DailyTaskApp() {
                         { key: "For Later", label: "For Later" },
                       ];
                       return groups.map((g) => {
-                        const items = tasks.filter((t) => (t.priority || "Daily Routine") === g.key);
+                        const items = tasks.filter(
+                          (t) => (t.priority || "Daily Routine") === g.key
+                        );
                         return (
-                          <div key={g.key} className="bg-white/5 rounded-lg p-3">
-                            <h4 className="text-sm font-semibold mb-2">{g.label}</h4>
+                          <div
+                            key={g.key}
+                            className="bg-white/5 rounded-lg p-3"
+                          >
+                            <h4 className="text-sm font-semibold mb-2">
+                              {g.label}
+                            </h4>
                             <div className="space-y-3">
                               {items.length === 0 ? (
-                                <p className="text-xs text-white/60 italic">No tasks</p>
+                                <p className="text-xs text-white/60 italic">
+                                  No tasks
+                                </p>
                               ) : (
                                 items.map((task) => (
                                   <motion.div
@@ -328,21 +355,51 @@ export default function DailyTaskApp() {
                                     >
                                       <CardContent className="flex items-center justify-between p-4 lg:p-6">
                                         <div>
-                                          <div className="font-medium text-base lg:text-lg">{task.name}</div>
+                                          <div className="font-medium text-base lg:text-lg">
+                                            {task.name}
+                                          </div>
                                           <div className="mt-1 flex items-center gap-2 text-xs">
-                                            <span className={`px-2 py-0.5 rounded-full ${priorityBadgeClass(task.priority)}`}>{task.priority || 'Daily Routine'}</span>
+                                            <span
+                                              className={`px-2 py-0.5 rounded-full ${priorityBadgeClass(
+                                                task.priority
+                                              )}`}
+                                            >
+                                              {task.priority || "Daily Routine"}
+                                            </span>
                                             {task.reminderTime && (
-                                              <span className="px-2 py-0.5 rounded-full bg-white/10 text-white/80">⏰ {task.reminderTime} • {getDateForDay(day)}</span>
+                                              <span className="px-2 py-0.5 rounded-full bg-white/10 text-white/80">
+                                                ⏰ {task.reminderTime} •{" "}
+                                                {getDateForDay(day)}
+                                              </span>
                                             )}
                                           </div>
                                         </div>
                                         <div className="flex items-center gap-2">
                                           {task.completedDays.includes(day) && (
-                                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+                                            <motion.div
+                                              initial={{ scale: 0 }}
+                                              animate={{ scale: 1 }}
+                                              transition={{
+                                                type: "spring",
+                                                stiffness: 300,
+                                                damping: 20,
+                                              }}
+                                            >
                                               <CheckCircle2 className="w-5 h-5 lg:w-6 lg:h-6" />
                                             </motion.div>
                                           )}
-                                          <Button variant="ghost" size="sm" className={`p-2 hover:bg-red-500/20 ${task.completedDays.includes(day) ? "text-white hover:bg-red-500/30" : "text-red-500 hover:text-red-600"}`} onClick={(e) => deleteTask(task.id, e)}>
+                                          <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className={`p-2 hover:bg-red-500/20 ${
+                                              task.completedDays.includes(day)
+                                                ? "text-white hover:bg-red-500/30"
+                                                : "text-red-500 hover:text-red-600"
+                                            }`}
+                                            onClick={(e) =>
+                                              deleteTask(task.id, e)
+                                            }
+                                          >
                                             <Trash2 className="w-3 h-3 lg:w-4 lg:h-4" />
                                           </Button>
                                         </div>
@@ -365,8 +422,14 @@ export default function DailyTaskApp() {
           ) : activeTab === "progress" ? (
             <div className="w-full max-w-3xl">
               <ProgressOverview
-                completedDays={tasks.filter((t) => t.completedDays.length > 0).length}
-                currentDayProgress={{ completed: tasks.filter((t) => t.completedDays.includes(day)).length, total: tasks.length }}
+                completedDays={
+                  tasks.filter((t) => t.completedDays.length > 0).length
+                }
+                currentDayProgress={{
+                  completed: tasks.filter((t) => t.completedDays.includes(day))
+                    .length,
+                  total: tasks.length,
+                }}
                 currentDay={day}
                 tasks={tasks}
                 totalDays={totalDays}
@@ -384,7 +447,7 @@ export default function DailyTaskApp() {
               />
             </div>
           )}
-          
+
           {/* Developer Credit */}
           <motion.footer
             className="mt-8 lg:mt-12 mb-6 text-center"
@@ -410,8 +473,8 @@ export default function DailyTaskApp() {
                 onDayClick={setDay}
                 completedDays={[]}
                 tasks={tasks}
-                  totalDays={totalDays}
-                  startDate={startDate}
+                totalDays={totalDays}
+                startDate={startDate}
               />
             </div>
           </div>

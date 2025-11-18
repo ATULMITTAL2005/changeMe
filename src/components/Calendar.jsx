@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
 
-const Calendar = ({ currentDay, onDayClick, completedDays, tasks, totalDays = 100, startDate }) => {
+const Calendar = ({
+  currentDay,
+  onDayClick,
+  completedDays,
+  tasks,
+  totalDays = 100,
+  startDate,
+}) => {
   // Helper function to check if a day is completed (all tasks done that day)
   const isDayCompleted = (day) => {
     if (!tasks || tasks.length === 0) return false;
@@ -20,7 +27,9 @@ const Calendar = ({ currentDay, onDayClick, completedDays, tasks, totalDays = 10
 
   const percentComplete = (day) => {
     if (!tasks || tasks.length === 0) return 0;
-    const completed = tasks.filter((t) => (t.completedDays || []).includes(day)).length;
+    const completed = tasks.filter((t) =>
+      (t.completedDays || []).includes(day)
+    ).length;
     return Math.round((completed / tasks.length) * 100);
   };
 
@@ -59,7 +68,13 @@ const Calendar = ({ currentDay, onDayClick, completedDays, tasks, totalDays = 10
           <div className="absolute left-0 right-0 bottom-0 h-1">
             <div
               style={{ width: `${pct}%` }}
-              className={`h-1 ${pct === 100 ? 'bg-green-600' : pct > 0 ? 'bg-blue-400' : 'bg-white/10'}`}
+              className={`h-1 ${
+                pct === 100
+                  ? "bg-green-600"
+                  : pct > 0
+                  ? "bg-blue-400"
+                  : "bg-white/10"
+              }`}
             />
           </div>
         </motion.button>
@@ -76,7 +91,9 @@ const Calendar = ({ currentDay, onDayClick, completedDays, tasks, totalDays = 10
       transition={{ delay: 0.6, duration: 0.5 }}
     >
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-white text-center">{totalDays}-Day Calendar</h3>
+        <h3 className="text-lg font-semibold text-white text-center">
+          {totalDays}-Day Calendar
+        </h3>
         <div className="text-xs text-white/80 hidden sm:flex items-center gap-3">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-green-500 rounded-full" />
@@ -93,7 +110,11 @@ const Calendar = ({ currentDay, onDayClick, completedDays, tasks, totalDays = 10
         </div>
       </div>
       <div className="mb-4 overflow-x-auto">
-        <div className={`grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2 p-1`}>{renderCalendar()}</div>
+        <div
+          className={`grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2 p-1`}
+        >
+          {renderCalendar()}
+        </div>
       </div>
     </motion.div>
   );
