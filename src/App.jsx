@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2, Plus, Trash2 } from "lucide-react";
+import { CheckCircle2, Plus, Trash2, Moon, Sun } from "lucide-react";
 import CircularProgress from "./components/CircularProgress";
 import ProgressOverview from "./components/ProgressOverview";
 import Calendar from "./components/Calendar";
@@ -216,19 +216,6 @@ export default function DailyTaskApp() {
                 Add Task
               </Button>
             </div>
-            <div className="flex items-center justify-between gap-2">
-              <label className="text-sm">Dark</label>
-              <button
-                onClick={() => setDarkMode((m) => !m)}
-                className={`${
-                  darkMode
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-100 text-gray-800"
-                } px-2 py-1 rounded`}
-              >
-                {darkMode ? "On" : "Off"}
-              </button>
-            </div>
           </div>
         </aside>
 
@@ -273,6 +260,24 @@ export default function DailyTaskApp() {
                 >
                   Calendar
                 </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  onClick={() => setDarkMode((m) => !m)}
+                  variant="ghost"
+                  className={`${
+                    darkMode
+                      ? "bg-gray-700 text-yellow-300"
+                      : "bg-gray-100 text-gray-800"
+                  } p-2 rounded-md`}
+                  title="Toggle dark mode"
+                >
+                  {darkMode ? (
+                    <Sun className="w-4 h-4" />
+                  ) : (
+                    <Moon className="w-4 h-4" />
+                  )}
+                </Button>
               </div>
             </div>
 
